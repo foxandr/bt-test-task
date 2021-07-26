@@ -1,9 +1,9 @@
 package test.models;
 
+import org.hibernate.annotations.JoinFormula;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.Set;
 
 @Entity
 @Table(name = "accounts")
@@ -30,18 +30,19 @@ public class AccountEntity {
     })
     private UserEntity user;
 
-    @OneToMany(mappedBy = "account")
-    private Set<OperationEntity> operations;
+    @ManyToOne
+    @JoinFormula("(SELECT o.id FROM operations o WHERE o.account_id = id ORDER BY o.datetime DESC LIMIT 1)")
+    private OperationEntity operation;
 
     public AccountEntity() {
     }
 
-    public AccountEntity(UserEntity user, String number, BigDecimal balance, String currency, Set<OperationEntity> operations) {
+    public AccountEntity(UserEntity user, String number, BigDecimal balance, String currency, OperationEntity operation) {
         this.user = user;
         this.number = number;
         this.balance = balance;
         this.currency = currency;
-        this.operations = operations;
+        this.operation = operation;
     }
 
     public Long getId() {
@@ -64,7 +65,7 @@ public class AccountEntity {
         return currency;
     }
 
-    public Set<OperationEntity> getOperations() {
-        return Collections.unmodifiableSet(operations);
+    public OperationEntity getOperation() {
+        return operation;
     }
 }

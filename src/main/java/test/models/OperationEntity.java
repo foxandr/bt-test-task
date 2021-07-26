@@ -1,5 +1,7 @@
 package test.models;
 
+import test.converters.OperationTypeConverter;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -27,7 +29,7 @@ public class OperationEntity {
     private BigDecimal totalSum;
 
     @Column(name = "operation", nullable = false)
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = OperationTypeConverter.class)
     private OperationType operationType;
 
     @Column(name = "datetime", nullable = false, columnDefinition = "TIMESTAMP")

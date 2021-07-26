@@ -1,5 +1,6 @@
 package test.dtos;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import test.models.OperationType;
 
 import java.math.BigDecimal;
@@ -11,6 +12,7 @@ public class OperationDto {
 
     private UserIdDto userId;
 
+    @JsonBackReference
     private AccountDto account;
 
     private BigDecimal totalSum;

@@ -1,5 +1,7 @@
 package test.dtos;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.List;
 
 public class UserDto {
@@ -8,6 +10,7 @@ public class UserDto {
 
     private String address;
 
+    @JsonManagedReference
     private List<AccountDto> accounts;
 
     public UserIdDto getUserId() {

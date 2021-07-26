@@ -19,6 +19,7 @@ public class UserEntity {
     private String address;
 
     @OneToMany(mappedBy = "user")
+    @OrderBy("account_number ASC, currency DESC")
     private List<AccountEntity> accounts;
 
     public UserEntity() {

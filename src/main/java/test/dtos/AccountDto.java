@@ -1,7 +1,9 @@
 package test.dtos;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.math.BigDecimal;
-import java.util.Set;
 
 public class AccountDto {
 
@@ -13,9 +15,11 @@ public class AccountDto {
 
     private String currency;
 
+    @JsonBackReference
     private UserDto user;
 
-    private Set<OperationDto> operations;
+    @JsonManagedReference
+    private OperationDto operation;
 
     public Long getId() {
         return id;
@@ -37,8 +41,8 @@ public class AccountDto {
         return currency;
     }
 
-    public Set<OperationDto> getOperations() {
-        return operations;
+    public OperationDto getOperation() {
+        return operation;
     }
 
     public void setId(Long id) {
@@ -61,7 +65,7 @@ public class AccountDto {
         this.user = user;
     }
 
-    public void setOperations(Set<OperationDto> operations) {
-        this.operations = operations;
+    public void setOperation(OperationDto operation) {
+        this.operation = operation;
     }
 }
