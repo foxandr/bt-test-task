@@ -31,7 +31,7 @@ public class AccountEntity {
     })
     private UserId userId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinFormula("(SELECT o.id FROM operations o WHERE o.account_id = id ORDER BY o.datetime DESC LIMIT 1)")
     private OperationEntity operation;
 

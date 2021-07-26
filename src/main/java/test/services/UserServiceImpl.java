@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import test.models.AccountEntity;
 import test.models.UserEntity;
+import test.models.UserId;
 import test.repositories.UserRepository;
 import test.utils.AccountNumberGenerator;
 
@@ -46,5 +47,10 @@ public class UserServiceImpl implements UserService {
 
         entityManager.persist(userEntity);
         return userEntity;
+    }
+
+    @Override
+    public void deleteUser(UserId userId) {
+        userRepository.deleteById(userId);
     }
 }
