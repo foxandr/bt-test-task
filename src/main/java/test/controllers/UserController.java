@@ -2,9 +2,7 @@ package test.controllers;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import test.dtos.UserDto;
 import test.models.UserEntity;
 import test.services.UserService;
@@ -33,7 +31,17 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
+    @PostMapping("/create")
+    public UserDto createUser(@RequestBody UserDto newUser) {
+        UserEntity user = userService.createUser(convertDto(newUser));
+        return convertEntity(user);
+    }
+
     private UserDto convertEntity(UserEntity userEntity) {
         return modelMapper.map(userEntity, UserDto.class);
+    }
+
+    private UserEntity convertDto(UserDto userDto) {
+        return modelMapper.map(userDto, UserEntity.class);
     }
 }

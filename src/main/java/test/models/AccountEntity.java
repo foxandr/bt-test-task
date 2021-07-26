@@ -9,48 +9,38 @@ import java.math.BigDecimal;
 @Table(name = "accounts")
 public class AccountEntity {
 
+    private static final String DEFAULT_CURRENCY = "USD";
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "account_number", nullable = false, length = 12)
     private String number;
 
-    @Column(name = "account_balance", nullable = false, precision = 10, scale = 4)
-    private BigDecimal balance;
+    @Column(name = "account_balance", precision = 10, scale = 4)
+    private BigDecimal balance = BigDecimal.ZERO;
 
     @Column(length = 25)
-    private String currency;
+    private String currency = DEFAULT_CURRENCY;
 
-    @ManyToOne
-    @MapsId("userId")
-    @JoinColumns({
-            @JoinColumn(name = "first_name", referencedColumnName = "first_name"),
-            @JoinColumn(name = "last_name", referencedColumnName = "last_name")
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride( name = "firstName", column = @Column(name = "first_name", nullable = false)),
+            @AttributeOverride( name = "lastName", column = @Column(name = "last_name", nullable = false))
     })
-    private UserEntity user;
+    private UserId userId;
 
     @ManyToOne
     @JoinFormula("(SELECT o.id FROM operations o WHERE o.account_id = id ORDER BY o.datetime DESC LIMIT 1)")
     private OperationEntity operation;
 
-    public AccountEntity() {
-    }
-
-    public AccountEntity(UserEntity user, String number, BigDecimal balance, String currency, OperationEntity operation) {
-        this.user = user;
-        this.number = number;
-        this.balance = balance;
-        this.currency = currency;
-        this.operation = operation;
-    }
-
     public Long getId() {
         return id;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public UserId getUserId() {
+        return userId;
     }
 
     public String getNumber() {
@@ -67,5 +57,29 @@ public class AccountEntity {
 
     public OperationEntity getOperation() {
         return operation;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public void setUserId(UserId userId) {
+        this.userId = userId;
+    }
+
+    public void setOperation(OperationEntity operation) {
+        this.operation = operation;
     }
 }

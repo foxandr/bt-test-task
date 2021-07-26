@@ -1,7 +1,6 @@
 package test.models;
 
 import javax.persistence.*;
-import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -18,17 +17,13 @@ public class UserEntity {
     @Column(nullable = false)
     private String address;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumns({
+            @JoinColumn(name = "first_name", referencedColumnName = "first_name"),
+            @JoinColumn(name = "last_name", referencedColumnName = "last_name")
+    })
     @OrderBy("account_number ASC, currency DESC")
     private List<AccountEntity> accounts;
-
-    public UserEntity() {
-    }
-
-    public UserEntity(UserId userId, String address) {
-        this.userId = userId;
-        this.address = address;
-    }
 
     public UserId getUserId() {
         return userId;
@@ -39,6 +34,18 @@ public class UserEntity {
     }
 
     public List<AccountEntity> getAccounts() {
-        return Collections.unmodifiableList(accounts);
+        return accounts;
+    }
+
+    public void setUserId(UserId userId) {
+        this.userId = userId;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setAccounts(List<AccountEntity> accounts) {
+        this.accounts = accounts;
     }
 }

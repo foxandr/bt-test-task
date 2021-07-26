@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class OperationEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Embedded
@@ -35,18 +35,6 @@ public class OperationEntity {
     @Column(name = "datetime", nullable = false, columnDefinition = "TIMESTAMP")
     private LocalDateTime dateTime;
 
-    public OperationEntity() {
-    }
-
-    public OperationEntity(UserId userId, AccountEntity account, BigDecimal totalSum,
-                           OperationType operationType, LocalDateTime dateTime) {
-        this.userId = userId;
-        this.account = account;
-        this.totalSum = totalSum;
-        this.operationType = operationType;
-        this.dateTime = dateTime;
-    }
-
     public Long getId() {
         return id;
     }
@@ -69,5 +57,29 @@ public class OperationEntity {
 
     public LocalDateTime getDateTime() {
         return dateTime;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUserId(UserId userId) {
+        this.userId = userId;
+    }
+
+    public void setAccount(AccountEntity account) {
+        this.account = account;
+    }
+
+    public void setTotalSum(BigDecimal totalSum) {
+        this.totalSum = totalSum;
+    }
+
+    public void setOperationType(OperationType operationType) {
+        this.operationType = operationType;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 }

@@ -7,4 +7,6 @@ import java.util.Collection;
 public interface UserService {
 
     Collection<UserEntity> getUsers();
+
+    UserEntity createUser(UserEntity userEntity);
 }
